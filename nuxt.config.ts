@@ -1,29 +1,27 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-// const apiBaseUrl = 'http://localhost:3001'
-const apiBaseUrl = 'https://movies-proxy.vercel.app'
-
 export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
-    '@pinia/nuxt',
     '@nuxt/image-edge',
     '@nuxtjs/i18n',
   ],
+  devtools: {
+    enabled: true,
+  },
   experimental: {
     inlineSSRStyles: false,
   },
   routeRules: {
     '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
+    '/api/**': { cors: true },
+    '/api/tmdb/**': { swr: 3600 },
   },
   runtimeConfig: {
-    public: {
-      apiBaseUrl,
+    tmdb: {
+      apiKey: process.env.TMDB_API_KEY || '',
     },
-  },
-  devtools: {
-    enabled: true,
   },
   image: {
     provider: 'proxy',
@@ -31,7 +29,7 @@ export default defineNuxtConfig({
       proxy: {
         provider: 'ipx',
         options: {
-          baseURL: `${apiBaseUrl}/ipx`,
+          baseURL: '/api/ipx',
         },
       },
     },

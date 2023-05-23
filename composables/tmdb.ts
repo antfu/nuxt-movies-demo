@@ -1,10 +1,6 @@
-import { $fetch } from 'ofetch'
 import { LRUCache } from 'lru-cache'
 import { hash as ohash } from 'ohash'
 import type { Credits, Media, MediaType, PageResult, Person } from '../types'
-
-// const apiBaseUrl = 'http://localhost:3001'
-const apiBaseUrl = 'https://movies-proxy.vercel.app'
 
 const cache = new LRUCache<string, any>({
   max: 500,
@@ -16,8 +12,7 @@ function _fetchTMDB(url: string, params: Record<string, string | number | undefi
     const locale = useNuxtApp().$i18n.locale
     params.language = unref(locale)
   }
-  return $fetch(url, {
-    baseURL: `${apiBaseUrl}/tmdb`,
+  return $fetch(`/api/tmdb/${url}`, {
     params,
   })
 }

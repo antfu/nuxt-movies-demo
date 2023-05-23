@@ -1,7 +1,0 @@
-{
-  "extends": "./.nitro/types/tsconfig.json",
-  "compilerOptions": {
-    "strict": true,
-    "allowSyntheticDefaultImports": true
-  }
-}
