@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/image-edge',
     '@nuxtjs/i18n',
+    '@nuxt/devtools',
   ],
   devtools: {
     enabled: true,
